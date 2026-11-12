@@ -1,0 +1,10 @@
+/* 민상님 fit-for-u.py 의 "MONO FASHION DESIGN v3" 를 그대로 옮김 — 흑백, 각진 모서리, DM Sans + Noto Sans KR */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
+:root {
+  --ink: #111; --gray: #777; --sub: #555; --line: #e5e5e5; --field: #d5d5d5; --soft: #f3f3f3; --card: #fff; --bg: #fff;
+  font-family: "DM Sans", "Noto Sans KR", sans-serif; color: var(--ink);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); }
+button, select, input, textarea { font: inherit; color: inherit; }
+a { color: inherit; }

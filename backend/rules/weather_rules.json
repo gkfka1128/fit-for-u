@@ -1,0 +1,448 @@
+{
+ "_doc": "체감온도 → 착용 규칙. 등급은 K-Fashion 카테고리×소재에서 계산 (warmth). 구간은 국내 통용 8단계 (회의자료 260913 §2-3).",
+ "bands": [
+  {
+   "name": "폭염",
+   "min": 28,
+   "max": 99,
+   "top_sleeve": [
+    "민소매",
+    "반팔",
+    "캡",
+    "없음"
+   ],
+   "outer": "forbid",
+   "bottom_material_exclude": [
+    "울/캐시미어",
+    "코듀로이",
+    "플리스",
+    "패딩",
+    "가죽",
+    "무스탕",
+    "퍼",
+    "벨벳",
+    "트위드"
+   ],
+   "top_material_exclude": [
+    "울/캐시미어",
+    "니트",
+    "헤어 니트",
+    "플리스",
+    "패딩",
+    "가죽",
+    "퍼",
+    "벨벳",
+    "코듀로이",
+    "트위드"
+   ],
+   "top_material_prefer": [
+    "린넨",
+    "시폰"
+   ],
+   "note": "민소매·반팔·린넨",
+   "color_prefer": "light"
+  },
+  {
+   "name": "더움",
+   "min": 23,
+   "max": 28,
+   "top_sleeve": [
+    "민소매",
+    "반팔",
+    "7부소매",
+    "캡",
+    "없음"
+   ],
+   "outer": "forbid",
+   "bottom_material_exclude": [
+    "울/캐시미어",
+    "코듀로이",
+    "플리스",
+    "패딩",
+    "가죽",
+    "무스탕",
+    "퍼",
+    "벨벳"
+   ],
+   "top_material_exclude": [
+    "울/캐시미어",
+    "헤어 니트",
+    "플리스",
+    "패딩",
+    "가죽",
+    "퍼",
+    "벨벳",
+    "코듀로이"
+   ],
+   "top_material_prefer": [
+    "린넨",
+    "저지"
+   ],
+   "note": "반팔·얇은 셔츠",
+   "color_prefer": "light",
+   "knit_sleeve_only": [
+    "민소매",
+    "반팔",
+    "캡"
+   ]
+  },
+  {
+   "name": "따뜻",
+   "min": 20,
+   "max": 23,
+   "top_sleeve": [
+    "반팔",
+    "7부소매",
+    "긴팔",
+    "캡"
+   ],
+   "outer": "allow",
+   "top_material_exclude": [
+    "울/캐시미어",
+    "플리스",
+    "패딩",
+    "퍼"
+   ],
+   "bottom_material_exclude": [
+    "플리스",
+    "패딩",
+    "퍼"
+   ],
+   "outer_material_exclude": [
+    "울/캐시미어",
+    "패딩",
+    "플리스",
+    "퍼"
+   ],
+   "note": "긴팔 티·얇은 가디건"
+  },
+  {
+   "name": "선선",
+   "min": 17,
+   "max": 20,
+   "top_sleeve": [
+    "긴팔",
+    "7부소매"
+   ],
+   "outer": "allow",
+   "top_material_exclude": [
+    "플리스",
+    "패딩",
+    "퍼"
+   ],
+   "bottom_material_exclude": [
+    "패딩",
+    "퍼"
+   ],
+   "outer_material_exclude": [
+    "패딩",
+    "퍼",
+    "플리스"
+   ],
+   "outer_material_prefer": [
+    "저지",
+    "우븐",
+    "니트"
+   ],
+   "note": "가디건·얇은 재킷",
+   "outer_category_penalty": {
+    "베스트": 0.6
+   }
+  },
+  {
+   "name": "쌀쌀",
+   "min": 12,
+   "max": 17,
+   "top_sleeve": [
+    "긴팔"
+   ],
+   "outer": "require",
+   "outer_material_exclude": [
+    "패딩",
+    "퍼"
+   ],
+   "outer_material_prefer": [
+    "우븐",
+    "울/캐시미어",
+    "데님"
+   ],
+   "top_material_prefer": [
+    "니트",
+    "저지"
+   ],
+   "bottom_material_exclude": [
+    "패딩"
+   ],
+   "note": "자켓·트렌치",
+   "outer_category_penalty": {
+    "베스트": 0.6
+   }
+  },
+  {
+   "name": "추움",
+   "min": 9,
+   "max": 12,
+   "top_sleeve": [
+    "긴팔"
+   ],
+   "outer": "require",
+   "outer_material_exclude": [
+    "린넨",
+    "시폰"
+   ],
+   "outer_material_prefer": [
+    "울/캐시미어",
+    "가죽",
+    "트위드"
+   ],
+   "top_material_prefer": [
+    "니트",
+    "울/캐시미어"
+   ],
+   "bottom_material_exclude": [
+    "린넨",
+    "시폰"
+   ],
+   "top_material_exclude": [
+    "린넨",
+    "시폰",
+    "메시"
+   ],
+   "note": "코트·가죽자켓",
+   "color_prefer": "dark",
+   "outer_category_exclude": [
+    "베스트"
+   ]
+  },
+  {
+   "name": "많이추움",
+   "min": 5,
+   "max": 9,
+   "top_sleeve": [
+    "긴팔"
+   ],
+   "outer": "require",
+   "outer_material_exclude": [
+    "린넨",
+    "시폰",
+    "저지"
+   ],
+   "outer_material_prefer": [
+    "울/캐시미어",
+    "가죽",
+    "트위드",
+    "플리스"
+   ],
+   "top_material_prefer": [
+    "니트",
+    "울/캐시미어",
+    "플리스"
+   ],
+   "bottom_material_exclude": [
+    "린넨",
+    "시폰",
+    "레이스"
+   ],
+   "top_material_exclude": [
+    "린넨",
+    "시폰",
+    "메시",
+    "레이스"
+   ],
+   "note": "코트·두꺼운 재킷",
+   "color_prefer": "dark",
+   "outer_category_exclude": [
+    "베스트",
+    "가디건",
+    "짚업"
+   ]
+  },
+  {
+   "name": "한파",
+   "min": -99,
+   "max": 5,
+   "top_sleeve": [
+    "긴팔"
+   ],
+   "outer": "require",
+   "outer_material_exclude": [
+    "린넨",
+    "시폰",
+    "저지",
+    "우븐"
+   ],
+   "outer_material_prefer": [
+    "패딩",
+    "퍼",
+    "플리스",
+    "울/캐시미어"
+   ],
+   "top_material_prefer": [
+    "니트",
+    "울/캐시미어",
+    "플리스",
+    "헤어 니트"
+   ],
+   "bottom_material_exclude": [
+    "린넨",
+    "시폰",
+    "레이스",
+    "메시"
+   ],
+   "top_material_exclude": [
+    "린넨",
+    "시폰",
+    "메시",
+    "레이스"
+   ],
+   "note": "패딩·코트",
+   "color_prefer": "dark",
+   "outer_category_exclude": [
+    "베스트",
+    "가디건",
+    "짚업"
+   ],
+   "outer_category_penalty": {
+    "재킷": 0.6
+   },
+   "outer_need_one": [
+    "패딩",
+    "코트"
+   ]
+  }
+ ],
+ "rain": {
+  "precip_prob": 60,
+  "material_exclude": [
+   "스웨이드",
+   "가죽",
+   "실크",
+   "벨벳"
+  ],
+  "shoes_exclude": [
+   "스웨이드 로퍼",
+   "캔버스 스니커즈"
+  ],
+  "outer_prefer": [
+   "점퍼",
+   "짚업"
+  ],
+  "reason": "비 예보라 물에 약한 소재는 제외"
+ },
+ "shoes": {
+  "_doc": "K-Fashion 에 신발 부위가 없어 수기 목록. warmth 1(여름)~5(겨울)",
+  "items": [
+   {
+    "name": "스니커즈",
+    "warmth": 3,
+    "styles": [
+     "스트리트",
+     "스포티",
+     "캐주얼"
+    ]
+   },
+   {
+    "name": "캔버스 스니커즈",
+    "warmth": 2,
+    "styles": [
+     "스트리트",
+     "캐주얼"
+    ]
+   },
+   {
+    "name": "러닝화",
+    "warmth": 3,
+    "styles": [
+     "스포티"
+    ]
+   },
+   {
+    "name": "로퍼",
+    "warmth": 3,
+    "styles": [
+     "클래식",
+     "모던"
+    ]
+   },
+   {
+    "name": "스웨이드 로퍼",
+    "warmth": 3,
+    "styles": [
+     "클래식"
+    ]
+   },
+   {
+    "name": "옥스포드",
+    "warmth": 3,
+    "styles": [
+     "클래식",
+     "모던"
+    ]
+   },
+   {
+    "name": "샌들",
+    "warmth": 1,
+    "styles": [
+     "리조트",
+     "캐주얼"
+    ]
+   },
+   {
+    "name": "슬리퍼",
+    "warmth": 1,
+    "styles": [
+     "스트리트"
+    ]
+   },
+   {
+    "name": "첼시 부츠",
+    "warmth": 4,
+    "styles": [
+     "클래식",
+     "모던"
+    ]
+   },
+   {
+    "name": "앵클 부츠",
+    "warmth": 4,
+    "styles": [
+     "페미닌",
+     "모던"
+    ]
+   },
+   {
+    "name": "워커",
+    "warmth": 5,
+    "styles": [
+     "스트리트",
+     "밀리터리"
+    ]
+   },
+   {
+    "name": "롱 부츠",
+    "warmth": 5,
+    "styles": [
+     "페미닌",
+     "모던"
+    ]
+   },
+   {
+    "name": "플랫 슈즈",
+    "warmth": 2,
+    "styles": [
+     "페미닌",
+     "로맨틱"
+    ]
+   },
+   {
+    "name": "펌프스",
+    "warmth": 2,
+    "styles": [
+     "페미닌",
+     "섹시",
+     "모던"
+    ]
+   }
+  ]
+ }
+}

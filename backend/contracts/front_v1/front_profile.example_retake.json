@@ -1,0 +1,14 @@
+{
+ "schema_version": "front_profile_v1",
+ "status": "retake",
+ "error": "팔을 몸에서 조금 떼고 배경을 정리해 주세요.",
+ "quality": {
+  "passed": false,
+  "code": "implausible_width"
+ },
+ "body_group": null,
+ "cluster_id": null,
+ "recommendation_ready": false,
+ "recommendation_tags": [],
+ "photo_validated": false
+}

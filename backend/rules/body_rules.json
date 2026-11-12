@@ -1,0 +1,907 @@
+{
+ "_doc": "체형·색 규칙. rules[*]: when(입력 체형 조건) 이면 part 의 attr 이 value 인 아이템에 weight 가산. color_rules[*]: family(dark/light/vivid) 또는 tone_on_tone. source/principle = 근거 문헌. ⚠ 9/29 복원본(임계값·가중치 재설정).",
+ "sources": {
+  "_doc": "규칙의 근거 문헌. 규칙마다 source 에 id 목록 + 적용한 원리(principle). 통제 실험으로 검증된 건 S2 뿐이고 나머지는 의복 디자인 교재의 원리(시각 착시·비례)라는 점을 밝힌다.",
+  "S1": {
+   "cite": "Davis, M. L. (1996). Visual Design in Dress (3rd ed.). Prentice Hall.",
+   "what": "의복의 시각 디자인 원리 — 선의 방향(수직선은 길고 좁아 보이게, 수평선은 넓어 보이게), 뮐러-라이어·수평수직 착시, 명도(어두운 색은 후퇴·축소, 밝은 색은 전진·확대), 부피가 놓인 곳이 커 보임",
+   "url": "https://archive.org/details/visualdesignindr0000davi"
+  },
+  "S2": {
+   "cite": "류정아, 임원자 (1993). 의복디자인의 선이 체형에 미치는 착시효과. 한국의류학회지, 17(3), 475–490.",
+   "what": "한국 여성 체형에 허리선 높이·스커트 길이·수직/수평선 강조·스트라이프 방향 9개 변수의 착시효과를 실험으로 측정. 허리선을 올리면 다리가 길어 보이고, 수직 강조는 날씬·수평 강조는 넓어 보이나 '강할수록 좋은 건 아니고 적정 수준이 있다'",
+   "url": "https://scienceon.kisti.re.kr/srch/selectPORSrchArticle.do?cn=JAKO199319133640462"
+  },
+  "S3": {
+   "cite": "Marshall, S. G., Jackson, H. O., Stanley, M. S., Kefgen, M., & Touchie-Specht, P. (2004). Individuality in Clothing Selection and Personal Appearance (6th ed.). Pearson Prentice Hall.",
+   "what": "체형(역삼각·삼각·직사각·모래시계 등)별 의복 선택 지침 — 넓은 부위는 시선·부피를 빼고 좁은 부위에 볼륨·디테일을 더해 균형, 직사각형 체형은 허리선을 만들어 굴곡",
+   "url": "https://www.abebooks.com/9780130358653/"
+  },
+  "S4": {
+   "cite": "KS K 0050 (한국산업표준) 성인 남성복의 치수. 드롭(가슴둘레−허리둘레)에 따른 체형 구분.",
+   "what": "남성 체형 분류 기준 (Y/A/B). 9/20 부터 임계값은 실측 3분위(data/body_thresholds.json)로 대체, 분류 축(드롭)만 유지"
+  },
+  "S5": {
+   "cite": "Rasband, J. A., & Liechty, E. L. G. (2006). Fabulous Fit: Speed Fitting and Alteration (2nd ed.). Fairchild.",
+   "what": "체형 변이별 핏 — 몸에 붙는 옷은 체격을 그대로 드러내고, 적당한 여유(ease)가 실루엣을 정돈. 과한 여유는 부피를 더함"
+  },
+  "S6": {
+   "cite": "K-Fashion 데이터셋 (AI Hub) 96.8만 코디 통계 — 본 프로젝트 code/kfashion_color.py, kfashion_cooc.py",
+   "what": "같은 색 상·하의(톤온톤)의 공출현 lift 6~13, 핏·기장 조합 lift. 사람들이 실제로 그렇게 입는다는 근거(효과 검증은 아님)"
+  }
+ },
+ "rules": [
+  {
+   "id": "G1",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "핏",
+   "value": "노멀",
+   "weight": 0.8,
+   "reason": "상의는 노멀핏으로 어깨선을 깔끔하게 정돈",
+   "source": [
+    "S3",
+    "S5"
+   ],
+   "principle": "넓은 어깨엔 부피를 더하지 않는 노멀핏 — 넓은 부위 강조 금지"
+  },
+  {
+   "id": "G2",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "핏",
+   "value": "오버사이즈",
+   "weight": -0.8,
+   "reason": "오버사이즈 상의는 어깨선을 더 넓혀 보여 뺌",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "부피가 놓인 곳이 커 보임 — 오버사이즈는 어깨 폭을 키움"
+  },
+  {
+   "id": "G3",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "넥라인",
+   "value": "브이넥",
+   "weight": 0.6,
+   "reason": "브이넥의 세로선으로 상체가 길고 좁아 보임",
+   "source": [
+    "S1",
+    "S2"
+   ],
+   "principle": "V 네크라인 = 수직선 → 상체를 길고 좁아 보이게"
+  },
+  {
+   "id": "G4",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "넥라인",
+   "value": "오프숄더",
+   "weight": -1.0,
+   "reason": "오프숄더는 어깨선을 가로로 넓혀 보여 뺌",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "오프숄더는 어깨에 수평선을 그어 넓어 보이게"
+  },
+  {
+   "id": "G5",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "넥라인",
+   "value": "보트넥",
+   "weight": -0.8,
+   "reason": "보트넥은 어깨 위 가로선이라 어깨가 강조돼 뺌",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "보트넥 = 어깨 위 수평선 → 어깨 강조"
+  },
+  {
+   "id": "G6",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "핏",
+   "value": "와이드",
+   "weight": 0.7,
+   "reason": "와이드 하의로 하체 볼륨을 더해 상하 균형",
+   "source": [
+    "S3"
+   ],
+   "principle": "좁은 하체에 볼륨을 더해 상하 균형 (역삼각 체형 지침)"
+  },
+  {
+   "id": "G7",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "핏",
+   "value": "루즈",
+   "weight": 0.4,
+   "reason": "여유 있는 하의로 하체에 볼륨을 더해 상하 균형",
+   "source": [
+    "S3"
+   ],
+   "principle": "하체에 여유 → 상하 균형"
+  },
+  {
+   "id": "G8",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "핏",
+   "value": "스키니",
+   "weight": -0.7,
+   "reason": "스키니는 하체를 더 좁아 보이게 해 어깨가 더 도드라져 뺌",
+   "source": [
+    "S3"
+   ],
+   "principle": "스키니는 하체를 더 좁아 보이게 해 역삼각을 강조"
+  },
+  {
+   "id": "G9",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "attr": "핏",
+   "value": "오버사이즈",
+   "weight": -0.5,
+   "reason": "오버사이즈 아우터는 어깨선을 바깥으로 옮겨 어깨가 더 넓어 보여 뺌",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "드롭숄더는 어깨선을 바깥으로 옮겨 폭을 키움"
+  },
+  {
+   "id": "H1",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "핏",
+   "value": "노멀",
+   "weight": 0.7,
+   "reason": "하의는 부피 없는 노멀핏으로 라인을 깔끔하게 정돈",
+   "source": [
+    "S3",
+    "S5"
+   ],
+   "principle": "발달한 하체는 부피 없는 스트레이트로 정돈 (삼각 체형 지침)"
+  },
+  {
+   "id": "H2",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "핏",
+   "value": "스키니",
+   "weight": -0.6,
+   "reason": "몸에 붙는 하의는 하체 윤곽을 그대로 드러내 뺌",
+   "source": [
+    "S3",
+    "S5"
+   ],
+   "principle": "타이트한 하의는 하체 윤곽을 그대로 드러냄"
+  },
+  {
+   "id": "H3",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "기장",
+   "value": "발목",
+   "weight": 0.4,
+   "reason": "발목까지 오는 긴 하의의 세로선이 다리 라인을 정리",
+   "source": [
+    "S1",
+    "S2"
+   ],
+   "principle": "긴 기장의 수직선이 다리 라인을 정리"
+  },
+  {
+   "id": "H4",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "기장",
+   "value": "크롭",
+   "weight": -0.7,
+   "reason": "크롭 상의는 시선을 골반선으로 끌어 내려 뺌",
+   "source": [
+    "S2",
+    "S3"
+   ],
+   "principle": "크롭 상의는 시선을 골반선(가장 넓은 곳)으로"
+  },
+  {
+   "id": "H5",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "넥라인",
+   "value": "보트넥",
+   "weight": 0.6,
+   "reason": "보트넥의 가로선이 어깨를 넓혀 하체와 균형",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "보트넥의 수평선으로 어깨를 넓혀 하체와 균형"
+  },
+  {
+   "id": "H6",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "넥라인",
+   "value": "스퀘어넥",
+   "weight": 0.4,
+   "reason": "스퀘어넥으로 상체에 시선을 모아 하체와 균형",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "상체에 볼륨 디테일 → 시선을 위로, 부피로 균형"
+  },
+  {
+   "id": "H7",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "attr": "핏",
+   "value": "루즈",
+   "weight": 0.4,
+   "reason": "상의에 여유를 줘 상체 볼륨으로 하체와 균형",
+   "source": [
+    "S3"
+   ],
+   "principle": "상의 여유로 상체 볼륨 보완"
+  },
+  {
+   "id": "B1",
+   "part": "상의",
+   "sex": "F",
+   "when": {
+    "group": "균형"
+   },
+   "attr": "기장",
+   "value": "크롭",
+   "weight": 0.3,
+   "reason": "균형 잡힌 체형이라 크롭으로 허리선을 드러내 굴곡을 만듦",
+   "source": [
+    "S3"
+   ],
+   "principle": "직사각 체형은 허리선을 드러내 굴곡"
+  },
+  {
+   "id": "B2",
+   "part": "하의",
+   "sex": "F",
+   "when": {
+    "group": "균형"
+   },
+   "attr": "기장",
+   "value": "미디",
+   "weight": 0.3,
+   "reason": "미디 기장으로 허리 위치를 또렷하게",
+   "source": [
+    "S3"
+   ],
+   "principle": "벨트·띠로 허리 위치를 정의"
+  },
+  {
+   "id": "B3",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "group": "균형"
+   },
+   "attr": "핏",
+   "value": "타이트",
+   "weight": 0.3,
+   "reason": "허리가 들어간 아우터로 라인을 살림",
+   "source": [
+    "S3"
+   ],
+   "principle": "허리가 들어간 아우터로 라인 강조"
+  },
+  {
+   "id": "W1",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "핏",
+   "value": "타이트",
+   "weight": -0.8,
+   "reason": "몸에 붙는 상의는 체격을 그대로 드러내 뺌",
+   "source": [
+    "S5",
+    "S3"
+   ],
+   "principle": "몸에 붙는 옷은 체격을 그대로 드러냄"
+  },
+  {
+   "id": "W2",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "핏",
+   "value": "스키니",
+   "weight": -0.7,
+   "reason": "몸에 붙는 하의는 체격을 강조해 뺌",
+   "source": [
+    "S5",
+    "S3"
+   ],
+   "principle": "타이트한 하의는 체격 강조"
+  },
+  {
+   "id": "W3",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "넥라인",
+   "value": "브이넥",
+   "weight": 0.6,
+   "reason": "브이넥의 세로선이 날씬해 보이게 함",
+   "source": [
+    "S1",
+    "S2"
+   ],
+   "principle": "V 네크의 수직선이 날씬해 보이게"
+  },
+  {
+   "id": "W4",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "기장",
+   "value": "롱",
+   "weight": 0.6,
+   "reason": "롱 아우터의 긴 세로선이 날씬해 보이게 함",
+   "source": [
+    "S1",
+    "S2"
+   ],
+   "principle": "롱 아우터의 긴 수직선"
+  },
+  {
+   "id": "W5",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "기장",
+   "value": "크롭",
+   "weight": -0.8,
+   "reason": "크롭 상의는 허리·복부에 가로선을 그어 뺌",
+   "source": [
+    "S2",
+    "S3"
+   ],
+   "principle": "크롭은 허리·복부에 수평선을 그음"
+  },
+  {
+   "id": "W6",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "소매기장",
+   "value": "민소매",
+   "weight": -0.3,
+   "reason": "민소매 대신 소매 있는 상의로 골라 이번엔 뺌",
+   "source": [
+    "S1",
+    "S2"
+   ],
+   "principle": "가로 스트라이프는 폭을 넓혀 보임 (수평-수직 착시)"
+  },
+  {
+   "id": "W7",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "attr": "핏",
+   "value": "노멀",
+   "weight": 0.4,
+   "reason": "적당한 여유의 노멀핏이 실루엣을 정돈",
+   "source": [
+    "S5"
+   ],
+   "principle": "적당한 여유가 실루엣을 정돈"
+  },
+  {
+   "id": "S1",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "마름"
+   },
+   "attr": "핏",
+   "value": "루즈",
+   "weight": 0.5,
+   "reason": "여유 있는 핏으로 자연스러운 볼륨감을 더함",
+   "source": [
+    "S1",
+    "S5"
+   ],
+   "principle": "여유 있는 핏의 부피가 볼륨감을 더함"
+  },
+  {
+   "id": "S2",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "마름"
+   },
+   "attr": "핏",
+   "value": "타이트",
+   "weight": -0.4,
+   "reason": "몸에 붙는 옷은 마른 윤곽을 그대로 드러내 뺌",
+   "source": [
+    "S5",
+    "S3"
+   ],
+   "principle": "타이트는 마른 윤곽을 그대로 드러냄"
+  },
+  {
+   "id": "S3",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "build": "마름"
+   },
+   "attr": "핏",
+   "value": "오버사이즈",
+   "weight": 0.3,
+   "reason": "레이어드로 부피를 더해 볼륨감을 줌",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "레이어드로 부피를 더해 볼륨감"
+  },
+  {
+   "id": "L1",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "leg": "숏"
+   },
+   "attr": "기장",
+   "value": "크롭",
+   "weight": 0.6,
+   "reason": "허리선을 올려 다리가 길어 보이게",
+   "source": [
+    "S2"
+   ],
+   "principle": "허리선을 올리면 다리가 길어 보임 (실험 확인)"
+  },
+  {
+   "id": "L2",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "leg": "숏"
+   },
+   "attr": "기장",
+   "value": "롱",
+   "weight": -0.6,
+   "reason": "긴 상의는 허리선을 내려 다리가 짧아 보여 뺌",
+   "source": [
+    "S2"
+   ],
+   "principle": "긴 상의는 허리선을 내려 다리를 짧아 보이게"
+  },
+  {
+   "id": "L3",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "leg": "숏"
+   },
+   "attr": "기장",
+   "value": "발목",
+   "weight": 0.5,
+   "reason": "긴 하의의 세로선으로 다리 라인을 연장",
+   "source": [
+    "S1",
+    "S2"
+   ],
+   "principle": "긴 하의의 수직선으로 다리 라인 연장"
+  },
+  {
+   "id": "L4",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "leg": "숏"
+   },
+   "attr": "기장",
+   "value": "롱",
+   "weight": -0.6,
+   "reason": "다리를 가리는 롱 아우터는 세로 비례를 끊어 뺌",
+   "source": [
+    "S1"
+   ],
+   "principle": "다리를 가리는 긴 아우터는 세로 비례를 끊음"
+  },
+  {
+   "id": "L5",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "leg": "롱"
+   },
+   "attr": "기장",
+   "value": "롱",
+   "weight": 0.3,
+   "reason": "다리가 길어 허리선을 내려도 균형이 맞음",
+   "source": [
+    "S2",
+    "S3"
+   ],
+   "principle": "긴 다리는 허리선을 내려도 균형"
+  },
+  {
+   "id": "L6",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "leg": "롱"
+   },
+   "attr": "기장",
+   "value": "미니",
+   "weight": 0.3,
+   "reason": "비례가 좋아 짧은 기장도 소화",
+   "source": [
+    "S3"
+   ],
+   "principle": "비례가 좋아 다양한 기장 소화"
+  },
+  {
+   "id": "K1",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "waist": "굴곡"
+   },
+   "attr": "핏",
+   "value": "타이트",
+   "weight": 0.4,
+   "reason": "허리가 들어간 편이라 허리 라인이 있는 아우터로 굴곡을 살림",
+   "source": [
+    "S3"
+   ],
+   "principle": "모래시계 체형은 허리선을 살려 균형을 유지"
+  },
+  {
+   "id": "K2",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "waist": "굴곡"
+   },
+   "attr": "핏",
+   "value": "오버사이즈",
+   "weight": -0.4,
+   "reason": "오버사이즈 상의는 들어간 허리선을 가려 뺌",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "부피가 놓인 곳이 커 보임 — 허리 굴곡을 덮음"
+  },
+  {
+   "id": "K3",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "waist": "직선"
+   },
+   "attr": "기장",
+   "value": "크롭",
+   "weight": 0.3,
+   "reason": "크롭 기장으로 허리선을 만들어 줌",
+   "source": [
+    "S3"
+   ],
+   "principle": "직사각 체형은 허리선을 드러내 굴곡"
+  },
+  {
+   "id": "K4",
+   "part": "아우터",
+   "sex": "any",
+   "when": {
+    "waist": "직선"
+   },
+   "attr": "핏",
+   "value": "타이트",
+   "weight": 0.3,
+   "reason": "허리가 들어간 아우터로 라인을 만들어 줌",
+   "source": [
+    "S3"
+   ],
+   "principle": "허리가 들어간 아우터로 라인 강조"
+  },
+  {
+   "id": "K5",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "waist": "직선"
+   },
+   "attr": "핏",
+   "value": "타이트",
+   "weight": -0.3,
+   "reason": "몸에 붙는 상의는 일자 실루엣을 그대로 드러내 뺌",
+   "source": [
+    "S3",
+    "S5"
+   ],
+   "principle": "타이트한 옷은 윤곽을 그대로 드러냄"
+  }
+ ],
+ "color_rules": [
+  {
+   "id": "C1",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "family": "dark",
+   "weight": 0.6,
+   "reason": "색은 어두운 상의로 상체를 차분하게 정돈",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "어두운 색(저명도)은 후퇴·축소 → 넓은 상체를 눌러 보이게"
+  },
+  {
+   "id": "C2",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "상체형"
+   },
+   "family": "light",
+   "weight": 0.6,
+   "reason": "색은 밝은 하의로 하체에 볼륨감을 더해 상하 균형",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "밝은 색(고명도)은 전진·확대 → 좁은 하체에 볼륨"
+  },
+  {
+   "id": "C3",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "family": "light",
+   "weight": 0.6,
+   "reason": "색은 밝은 상의로 시선을 위로",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "밝은 상의로 시선을 위로"
+  },
+  {
+   "id": "C4",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "group": "하체형"
+   },
+   "family": "dark",
+   "weight": 0.6,
+   "reason": "색은 어두운 하의로 하체를 정돈",
+   "source": [
+    "S1",
+    "S3"
+   ],
+   "principle": "어두운 하의로 넓은 하체 축소"
+  },
+  {
+   "id": "C5",
+   "part": "하의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "family": "dark",
+   "weight": 0.4,
+   "reason": "색은 어두운 하의로 실루엣을 정돈",
+   "source": [
+    "S1"
+   ],
+   "principle": "어두운 하의로 실루엣 정돈"
+  },
+  {
+   "id": "C6",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "family": "vivid",
+   "weight": -0.3,
+   "reason": "고채도 색은 시선을 모으고 커 보여 이번엔 뺌",
+   "source": [
+    "S1"
+   ],
+   "principle": "고채도는 시선 집중·확대"
+  },
+  {
+   "id": "C7",
+   "part": "상의",
+   "sex": "any",
+   "when": {
+    "build": "마름"
+   },
+   "family": "light",
+   "weight": 0.4,
+   "reason": "색은 밝은 상의로 볼륨감을 더함",
+   "source": [
+    "S1"
+   ],
+   "principle": "밝은 색이 볼륨감"
+  },
+  {
+   "id": "C8",
+   "part": "*",
+   "sex": "any",
+   "when": {
+    "leg": "숏"
+   },
+   "family": "tone_on_tone",
+   "weight": 0.5,
+   "reason": "상·하의를 같은 톤으로 맞춰 다리가 길어 보이게",
+   "source": [
+    "S1",
+    "S6"
+   ],
+   "principle": "상·하의 같은 톤 = 끊기지 않는 수직선 → 길어 보임. K-Fashion 에서도 톤온톤 lift 6~13"
+  },
+  {
+   "id": "C9",
+   "part": "*",
+   "sex": "any",
+   "when": {
+    "build": "통통"
+   },
+   "family": "tone_on_tone",
+   "weight": 0.4,
+   "reason": "상·하의를 같은 톤으로 맞춰 날씬해 보이게",
+   "source": [
+    "S1",
+    "S6"
+   ],
+   "principle": "톤온톤 수직선으로 날씬해 보이게"
+  }
+ ],
+ "color_family": {
+  "dark": [
+   "블랙",
+   "네이비",
+   "브라운",
+   "카키",
+   "와인",
+   "그레이"
+  ],
+  "light": [
+   "화이트",
+   "베이지",
+   "핑크",
+   "스카이블루",
+   "라벤더",
+   "민트",
+   "실버"
+  ],
+  "vivid": [
+   "레드",
+   "오렌지",
+   "옐로우",
+   "블루",
+   "그린",
+   "퍼플",
+   "네온",
+   "골드"
+  ]
+ },
+ "sex_exclude": {
+  "M": {
+   "상의": {
+    "카테고리": [
+     "블라우스",
+     "브라탑",
+     "탑"
+    ],
+    "넥라인": [
+     "오프숄더",
+     "스위트하트",
+     "홀터넥",
+     "원숄더"
+    ],
+    "기장": [
+     "크롭"
+    ]
+   },
+   "하의": {
+    "카테고리": [
+     "스커트",
+     "래깅스"
+    ],
+    "기장": [
+     "미디"
+    ]
+   },
+   "아우터": {
+    "기장": [
+     "크롭"
+    ]
+   }
+  },
+  "F": {}
+ }
+}

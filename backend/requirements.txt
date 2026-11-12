@@ -1,0 +1,13 @@
+# 추천 엔진·API 서버·체형 분석 (10/28 개발 환경 버전, Python 3.11)
+numpy==2.4.6
+pandas==3.0.6
+scipy==1.17.1
+scikit-learn==1.9.1
+joblib==1.6.0
+pillow==12.3.0
+requests==2.34.2
+matplotlib==3.11.2
+mediapipe==1.1.0
+opencv-contrib-python==5.0.0.93
+# Streamlit 데모(app.py)·웹페이지 연동 테스트(test_web_bridge.py)
+streamlit==1.64.0

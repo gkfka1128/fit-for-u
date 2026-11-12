@@ -1,0 +1,31 @@
+{
+  "schema_version": "2.0",
+  "request_id": "demo-002",
+  "sex": "female",
+  "age_years": 25,
+  "status": "ok",
+  "feature_definition_version": "ffu-features-2.0",
+  "measurement_definition_version": "demo-measurement-v2",
+  "body_profile": {
+    "S": 1.1666666666666667,
+    "U": 0.8666666666666667,
+    "C": null,
+    "W": 0.8,
+    "D": 0.8181818181818182,
+    "NW": 0.85,
+    "ND": 0.8636363636363636,
+    "UD": 0.9545454545454546,
+    "UH": 0.17333333333333334,
+    "HH": 0.2,
+    "WH": 0.16,
+    "BMI": 22.03856749311295
+  },
+  "model_version": "demo-only-not-a-trained-model",
+  "candidate_id": "demo-candidate",
+  "feature_spec": "NAVEL_BOTH_HEIGHT7",
+  "cluster_id": 0,
+  "cluster_count": 3,
+  "photo_validated": false,
+  "missing_required_measurements": [],
+  "errors": []
+}

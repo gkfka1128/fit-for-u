@@ -1,0 +1,33 @@
+# 파이썬 · 노드
+.venv/
+venv/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+dist-ssr/
+
+# 비밀·로컬 설정 (웹 개발용 .env.development 는 `VITE_API=/api` 뿐이라 추적)
+.env
+.env.*
+!web/.env.development
+*.key
+*.pem
+*.local
+
+# 실행하면 생기는 개인·대용량 데이터 — 올리지 않는다
+backend/data/members.db
+backend/data/prefs/
+backend/data/photo_cache/
+backend/data/gen_items/
+backend/data/thumbs*/
+backend/data/eval/
+backend/runs/*.log
+backend/runs/*.csv
+backend/runs/fig_*.png
+
+# 에디터
+.vscode/
+.idea/
+.DS_Store
+*.log

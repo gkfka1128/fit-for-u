@@ -1,0 +1,34 @@
+{
+ "_doc": "실측 3분위 기준 (AI Hub 의류 통합 데이터 착용자). 남 = 가슴−허리 드롭(cm), 여 = 가슴/엉덩이 비율. > hi 상체형, > lo 균형, 그 외 하체형",
+ "n": {
+  "M": 752,
+  "F": 2395
+ },
+ "M": {
+  "metric": "drop",
+  "hi": 12.0,
+  "lo": 7.0,
+  "median": 9.5
+ },
+ "F": {
+  "metric": "chest_hip",
+  "hi": 0.949,
+  "lo": 0.905,
+  "median": 0.928
+ },
+ "literature": {
+  "M": {
+   "metric": "drop",
+   "hi": 18.3,
+   "lo": 13.0,
+   "source": "KS K 0050 (역삼각 Y / 보통 A / 삼각 B)"
+  },
+  "F": {
+   "metric": "chest_hip",
+   "hi": 1.01,
+   "lo": null,
+   "hw": 1.22,
+   "source": "Sci. Reports 2026 (C/H>1.01 상체형, H/W>1.22 하체형)"
+  }
+ }
+}

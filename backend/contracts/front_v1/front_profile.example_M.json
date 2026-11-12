@@ -1,0 +1,38 @@
+{
+ "schema_version": "front_profile_v1",
+ "status": "experimental",
+ "model_version": "front_proxy_v3",
+ "quality": {
+  "passed": true,
+  "code": "passed_heuristic_checks"
+ },
+ "recommendation_ready": false,
+ "recommendation_tags": [],
+ "photo_validated": false,
+ "measurement_definition": "front_upper35_proxy_v3",
+ "warnings": [
+  "예시 파일 — 실제 사진 추론 결과 아님 (필드 모양만 app.py analyze() 응답과 같음)"
+ ],
+ "sex": "Male",
+ "model_id": "Male_front_equal_82001",
+ "cluster_id": 2,
+ "body_group": 2,
+ "ratios": {
+  "upper_hip_ratio": 0.972,
+  "waist_hip_ratio": 0.85
+ },
+ "cluster_centers": [
+  [
+   0.896,
+   0.835
+  ],
+  [
+   0.95,
+   0.932
+  ],
+  [
+   0.972,
+   0.85
+  ]
+ ]
+}

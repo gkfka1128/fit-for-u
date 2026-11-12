@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; background: transparent; }
+  button { width: 100%; padding: 8px 10px; border: 1px solid #d0d0d0; border-radius: 8px; background: #fff; color: #111;
+           font-size: 13px; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: default; }
+  #msg { margin-top: 4px; font-size: 11px; color: #666; min-height: 14px; }
+</style>
+</head>
+<body>
+<!-- Streamlit 양방향 컴포넌트 (npm 없이). 버튼을 누르면 브라우저 위치 → {lat, lon, accuracy} 를 파이썬으로 보낸다. 좌표는 서버에 저장하지 않음 -->
+<div id="wrap"><button id="go">📍 현재 위치 가져오기</button>
+<div id="msg"></div></div>
+<script>
+  const send = (type, data) => window.parent.postMessage(Object.assign({isStreamlitMessage: true, type}, data), "*");
+  const setValue = v => send("streamlit:setComponentValue", {value: v, dataType: "json"});
+  const fit = () => send("streamlit:setFrameHeight", {height: Math.ceil(document.getElementById("wrap").getBoundingClientRect().height) + 2});
+  const msg = document.getElementById("msg"), btn = document.getElementById("go");
+  window.addEventListener("message", e => {
+    if (e.data && e.data.type === "streamlit:render") fit();
+  });
+  btn.addEventListener("click", () => {
+    if (!navigator.geolocation) { msg.textContent = "이 브라우저는 위치를 지원하지 않아요"; setValue({error: "unsupported"}); return; }
+    btn.disabled = true; msg.textContent = "위치 확인 중…";
+    navigator.geolocation.getCurrentPosition(p => {
+      btn.disabled = false; msg.textContent = "위치를 가져왔어요";
+      setValue({lat: p.coords.latitude, lon: p.coords.longitude, accuracy: p.coords.accuracy, ts: Date.now()});
+    }, err => {
+      btn.disabled = false;
+      msg.textContent = err.code === 1 ? "위치 권한이 거부됐어요 (주소창 자물쇠 → 위치 허용)" : "위치를 가져오지 못했어요";
+      setValue({error: err.code === 1 ? "denied" : "unavailable", ts: Date.now()});
+    }, {enableHighAccuracy: false, timeout: 10000, maximumAge: 600000});
+  });
+  send("streamlit:componentReady", {apiVersion: 1});
+  fit();
+  new ResizeObserver(fit).observe(document.getElementById("wrap"));   // 사이드바를 접었다 펴면 폭이 바뀌어 높이도 다시 맞춤
+</script>
+</body>
+</html>

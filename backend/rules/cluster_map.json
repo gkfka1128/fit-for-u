@@ -1,0 +1,76 @@
+{
+  "_doc": "Fit-For-U v2 연결용 — K-Means 모델 버전별 군집 → 규칙 엔진 group(/build/leg) 매핑. 군집 번호는 모델마다 뜻이 달라 엔진이 임의로 이름 붙이지 않는다(AI_HANDOFF §6). 항목은 체형(K-Means) 파트와 합의해서만 추가한다. 매핑이 없는 model_version 은 group='균형' 기본값 + 경고 CLUSTER_UNMAPPED 로 처리된다. build 는 항목에 없으면 body_profile.BMI 로 정한다(<18.5 마름 / <23 보통 / ≥23 통통). 키는 2.0 은 model_version, front_profile_v1 은 'model_id@model_version'. status='provisional' 이면 추천은 하되 경고 CLUSTER_MAP_PROVISIONAL. cluster_id 는 0부터 (화면 1/2/3번 = cluster_id 0/1/2). group_from 이 있으면 group 은 비율 3분위로 정하고 군집은 waist(굴곡/보통/직선) 로만 쓴다.",
+  "_example_entry": {
+    "model_version": "<K-Means 파트가 발급한 불변 버전>",
+    "sex": "female",
+    "feature_spec": "NAVEL_BOTH_HEIGHT7",
+    "cluster_count": 3,
+    "clusters": {
+      "0": {
+        "group": "상체형|균형|하체형",
+        "build": "(선택) 마름|보통|통통",
+        "leg": "(선택) 롱|보통|숏",
+        "note": "근거 — 군집 중심의 U·S·HH 등"
+      }
+    }
+  },
+  "models": {
+    "Male_front_equal_82001@front_proxy_v3": {
+      "sex": "male",
+      "feature_spec": "front_upper35_proxy_v3",
+      "cluster_count": 3,
+      "status": "agreed",
+      "source": "손승민 카톡 2026-10-13 · 팀 레포 som1018/Fit-For-U d14ca7a body_analysis/front_prototype/{Male,Female}.json",
+      "clusters": {
+        "0": {
+          "label": "하체중심형",
+          "group": "하체형",
+          "note": "화면 1번. 중심 z U -0.84 · W -0.59 (상체/엉덩이 낮음)"
+        },
+        "1": {
+          "label": "균형형",
+          "group": "균형",
+          "note": "화면 2번. 중심 z U +0.35 · W +1.23"
+        },
+        "2": {
+          "label": "상체중심형",
+          "group": "상체형",
+          "note": "화면 3번. 중심 z U +0.83 · W -0.30 (상체/엉덩이 높음)"
+        }
+      }
+    },
+    "Female_front_waist_priority_82001@front_proxy_v3": {
+      "sex": "female",
+      "feature_spec": "front_upper35_proxy_v3",
+      "cluster_count": 3,
+      "status": "provisional",
+      "source": "손승민 카톡 2026-10-13 · 팀 레포 som1018/Fit-For-U d14ca7a body_analysis/front_prototype/{Male,Female}.json — 군집 이름은 손승민, group·waist 대응은 추천 파트 제안 (체형 파트 확인 전)",
+      "clusters": {
+        "0": {
+          "label": "굴곡형",
+          "waist": "굴곡",
+          "note": "화면 1번. 중심 z U -0.36 · W -0.94 — 허리가 엉덩이보다 많이 좁음 → K1·K2"
+        },
+        "1": {
+          "label": "직선형",
+          "waist": "직선",
+          "note": "화면 2번. 중심 z U +0.70 · W +1.73 — 허리와 엉덩이 폭이 비슷 → K3~K5"
+        },
+        "2": {
+          "label": "중간형",
+          "waist": "보통",
+          "note": "화면 3번 '1번과 2번 사이'. 중심 z U +0.07 · W +0.20 — 허리 규칙 없음"
+        }
+      },
+      "group_from": {
+        "ratio": "upper_hip_ratio",
+        "lo": 0.7959,
+        "hi": 0.836,
+        "below": "하체형",
+        "between": "균형",
+        "above": "상체형",
+        "basis": "Female.json U 평균 0.8159 · 표준편차 0.0465 에 정규분포 3분위(±0.4307σ) — 하위 1/3 하체형, 상위 1/3 상체형 (body_thresholds.py 의 '실측 3분위' 와 같은 방식). 군집은 허리/엉덩이 위주(가중치 1 vs 0.25)라 상·하체 축은 이 비율로 따로 본다"
+      }
+    }
+  }
+}
